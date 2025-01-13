@@ -1,92 +1,97 @@
-const postsArray = [];
+const postsArray = []
 
 const url = "https://jsonplaceholder.typicode.com"
 
 const requestOptions = {
     method: "GET",
-    redirect: "follow"
-};
+    redirect: "error"
+}
 
-function fetchPosts() {
+function fetchApi(endpoint, args = []){
+    
+    let fetchUri = url + endpoint
+
+    if(args.length > 0){
+        fetchUri += "?"+args[0]+"="+args[1]
+    }
+    // console.log(fetchUri)
+
     return new Promise((resolve, reject) => {
-        fetch(url+"/posts", requestOptions)
+        fetch(fetchUri, requestOptions)
             .then((response) => response.json())
             .then((result) => resolve(result))
             .catch((error) => reject(error))
-    });
-}
-
-function fetchUser(id) {
-    return new Promise((resolve, reject) => {
-        fetch(url+`/users?id=${id}`)
-            .then((response) => response.json())
-            .then((result) => resolve(result))
-            .catch((error) => reject(error))
+    
     })
 }
 
-function fetchUserByEmail(email) {
-    return new Promise((resolve, reject) => {
-        fetch(url+`/users?email=${email}`)
-            .then((response) => response.json())
-            .then((result) => resolve(result))
-            .catch((error) => reject(error))
-    })
-}
-
-function fetchComentarios(id) {
-    return new Promise((resolve, reject) => {
-        fetch(url+`/comments?postId=${id}`)
-            .then((response) => response.json())
-            .then((result) => resolve(result))
-    })
-}
-
-fetchPosts().then((result) => {
-        const posts = document.getElementById('posts');
+fetchApi("/posts").then((result) => {
+        const posts = document.getElementById('posts')
         result.forEach(post => {
-            const div = document.createElement('div');
-            const title = document.createElement('h2');
-            const userh3 = document.createElement('h3');
-            const body = document.createElement('p');
-            const comentarios = document.createElement('div');
-            fetchUser(post['userId'])
+            const div = document.createElement('div')
+            const title = document.createElement('h2')
+            const userh3 = document.createElement('h3')
+            const body = document.createElement('p')
+            const botonComentarios = document.createElement('div')
+            const divComentarios = document.createElement('div')
+            fetchApi("/users",["id", post['userId']])
                 .then((result) => {
-                    userh3.innerHTML = "by " + result[0]['username']
+                    userh3.innerHTML = "by " + result[0]['username'] + " (" + result[0]['email'] + ")"
                 }) 
-            comentarios.addEventListener("click" , (e) => fetchComentarios()
-                .then((result) => {
-                    const divComentarios = e.target;
-                    result.forEach(((post) => {
-                        const div = document.createElement('div')
-                        const userh4 = document.createElement('h4')
-                        const body = document.createElement('p')
+            botonComentarios.addEventListener("click", (e) => {
+                if(botonComentarios.getAttribute('botonComentarios') == 0) {
+                    e.target.innerHTML = "Comentarios ▼"
+                    fetchApi("/comments", ["postId", post['id']])
+                    .then((result) => {
+                        const divbotonComentarios = e.target.parentNode.lastChild
+                        result.forEach((comment) => {
+                            const div = document.createElement('div')
+                            const userh4 = document.createElement('h4')
+                            const body = document.createElement('p')
 
-                        fetchUserByEmail(post[email])
-                            .then((result) => {
-                                userh4.innerHTML = "by " + result[0]['username']
-                            })
-                        body = post['body']
+                            div.classList.add('comentario')
+
+                            userh4.innerHTML = "by " + comment['email']
+                            body.innerHTML = comment['body']
+                            div.appendChild(userh4)
+                            div.appendChild(body)
+                            divbotonComentarios.appendChild(div)
+                        })
+                    })
+                    botonComentarios.setAttribute('botonComentarios', 1)
+                } else {
+                    const divComentarios = e.target.parentNode.childNodes[4]
+                    const divbotonComentarios = e.target.parentNode.childNodes[3]
+                    if(divComentarios.classList.contains('escondido') == true) {
+                        divbotonComentarios.innerHTML = "Comentarios ▼"
+                        divComentarios.classList.remove('escondido')
+                    } else {
+                        divbotonComentarios.innerHTML = "Comentarios ▲"
+                        divComentarios.classList.add('escondido')
                     }
-                }))
+                }
+            })
             title.innerText = post['title']
             body.innerHTML = post['body']
-            comentarios.innerHTML = "Comentarios ▼"
+            botonComentarios.setAttribute('botonComentarios', 0)
+            botonComentarios.innerHTML = "Comentarios ▲"
 
             div.classList.add('post')
-            comentarios.classList.add('comentarios')
+            botonComentarios.classList.add('botonComentarios')
+            divComentarios.classList.add('comentarios')
 
             div.appendChild(title)
             div.appendChild(userh3)
             div.appendChild(body)
-            div.appendChild(comentarios)
+            div.appendChild(botonComentarios)
+            div.appendChild(divComentarios)
 
             
 
-            postsArray.push(div);
-        });
+            postsArray.push(div)
+        })
         postsArray.forEach((post) => {
-            posts.appendChild(post);
+            posts.appendChild(post)
             
-        });
+        })
     })
