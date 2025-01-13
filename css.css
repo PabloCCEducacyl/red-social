@@ -1,0 +1,73 @@
+body {
+    font-family: Inter,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #eecea9;
+}
+
+#posts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    gap: 44px;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+h1{
+    font-size: 48px;
+    text-transform: uppercase;
+}
+.icono {
+    width: 100px;
+    height: 100px;
+}
+
+.post {
+    width: 500px;
+    padding: 20px;
+    background: #fff;
+    border: 6px solid #000;
+    box-shadow: 12px 12px 0 #000;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.post:hover {
+    transform: translate(-10px, -10px);
+    box-shadow: 22px 22px 0 #000;
+}
+
+.post h2 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 900;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.post h3 {
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.post p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #000;
+    margin-bottom: 20px;
+}
