@@ -35,6 +35,7 @@ h1{
 }
 
 .post {
+    margin-top: 24px;
     width: 500px;
     padding: 20px;
     background: #fff;
@@ -64,6 +65,10 @@ h1{
     margin-top: 0;
     margin-bottom: 0;
     text-decoration: underline;
+}
+
+.post img {
+    width: 200px;
 }
 
 .post p {
@@ -102,4 +107,77 @@ h1{
 .escondido {
     height: 0;
     visibility: collapse;
+}
+
+.user {
+    width: 500px;
+    padding: 20px;
+    margin-bottom: 24px;
+    background: #fff;
+    border: 6px solid #000;
+    box-shadow: 12px 12px 0 #000;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.user:hover {
+    transform: translate(-10px, -10px);
+    box-shadow: 22px 22px 0 #000;
+}
+
+.user h2 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 900;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.user p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.menu{
+    margin: 20px;
+    display: flex;
+    gap: 40px;
+}
+
+.menu a{
+    color: #000;
+    text-decoration: none;
+    border-radius: 0;
+    border: #000 4px solid;
+    padding: 12px;
+    font-size: 2em;
+    background-color: #fff;
+    box-shadow: 6px 6px 0 #000;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu a:hover {
+    transform: translate(-6px, -6px);
+    box-shadow: 12px 12px 0 #000;
+}
+
+.volver{
+    opacity: 0%;
+    background-color: #fff;
+    color: #000;
+    padding: 8px 10px 8px 10px;
+    text-decoration: none;
+    border: #000 4px solid;
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    transition: visibility 2s;
+}
+
+.visible{
+    opacity: 100%;
 }
