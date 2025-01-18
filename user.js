@@ -5,9 +5,15 @@
 // if(userId == ""){
 //     window.location.href = "index.html";
 // }
+let tiempoUltimaActualizacion, tiempoActual;
 
 function fetchUsers(dom, userId){
-    console.log(userId)
+    let tiempoActual = Math.floor(Date.now() / 1000); 
+
+    if(tiempoActual - tiempoUltimaActualizacion < 10){
+        return;
+    }
+    
     divUser = document.createElement('div')
     divUser.setAttribute("id", "user")
     divUser.classList.add("user")
@@ -89,4 +95,5 @@ function fetchUsers(dom, userId){
             todoDOM.appendChild(todoDiv)
         })
     })
+    tiempoUltimaActualizacion = Math.floor(Date.now() / 1000);
 }

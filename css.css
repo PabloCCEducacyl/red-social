@@ -16,9 +16,12 @@ body {
     gap: 44px;
 }
 
-header{
+header a{
+    color: #000;
+    text-decoration: none;
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
     margin-top: 12px;
     margin-bottom: 24px;
